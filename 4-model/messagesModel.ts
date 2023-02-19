@@ -5,5 +5,6 @@ export enum role {
 export interface MessageModel {
     id: number,
     message: string,
-    role: role
+    role: role,
+    timestamp:string
 }

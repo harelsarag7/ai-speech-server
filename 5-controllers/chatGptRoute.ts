@@ -6,16 +6,20 @@ import { saveUserMessages } from '../3-logic/userLogic';
 
 
 ChatGptRoute.post('/message', async (req, res) => {
-    const message = req.body.message
+    const message = req.body.message;
+    const id = req.body.id
+    console.log(message);
+    
     try {
-        const translatedTextEnglish = await translateToEn(message);
-        
-        const results = await getMessageFromChatGPTandSave(translatedTextEnglish);
+        const translatedTextEnglish = await translateToEn(message);        
+        const results = await getMessageFromChatGPTandSave(translatedTextEnglish,id);
         const translatedTextUserLanguage = await translateToUserLanguage(results)
 
         res.status(200).json(translatedTextUserLanguage)
-        await saveUserMessages(translatedTextEnglish)
+        await saveUserMessages(translatedTextEnglish, id)
     } catch (e) {
         res.status(401).json(e)
     }
 })
+
+
